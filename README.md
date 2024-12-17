@@ -1,7 +1,8 @@
-# Tauri + Vue 3
+# Vesc 数据分析
 
-This template should help get you started developing with Tauri + Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 主要功能
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+* 基于CAN协议采集VESC运行时数据
+* 分析VESC运行时数据并以散点图的形式展示数据
+* 显示运行时数据的二次多项式公式
+* 基于得到的二次多项式公式验证拟合度

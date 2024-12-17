@@ -8,6 +8,8 @@ import {
   MoonOutline as Moon,
   SunnyOutline as Sunny,
   PulseOutline,
+  BarChartOutline,
+  CheckmarkDoneOutline
 } from "@vicons/ionicons5";
 
 
@@ -39,10 +41,36 @@ const menuOptions = [
           name: "home",
         }
       },
-      { default: () => "数据拟合" }
+      { default: () => "数据采集" }
     ),
     key: "home", // 唯一key
+    icon: renderIcon(BarChartOutline)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "dataProcess",
+        }
+      },
+      { default: () => "数据分析" }
+    ),
+    key: "dataProcess", // 唯一key
     icon: renderIcon(PulseOutline)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "checkGoodnessOfFit",
+        }
+      },
+      { default: () => "拟合度验证" }
+    ),
+    key: "checkGoodnessOfFit", // 唯一key
+    icon: renderIcon(CheckmarkDoneOutline)
   },
 ];
 
@@ -54,7 +82,7 @@ const menuOptions = [
       <!-- 页面顶部标题栏 -->
       <n-layout-header bordered class="title-bar" style="margin-top: -10px;">
         <n-flex justify="space-between">
-          <h1 class="title">Char Curve</h1>
+          <h1 class="title">Vesc 数据分析</h1>
           <div>
             <n-switch @update:value="changeTheme" style="margin-right: 10px">
               <template #icon>
@@ -75,8 +103,15 @@ const menuOptions = [
             default-value="home" />
         </n-layout-sider>
 
-        <n-layout style="margin-left: 15px; ">
-          <RouterView />
+        <n-layout style="margin-left: 15px; margin-right: 15px; min-height: 92.7vh;">
+          <NMessageProvider>
+            <!-- <RouterView /> -->
+            <router-view v-slot="{ Component }">
+              <keep-alive>
+                <component :is="Component" />
+              </keep-alive>
+            </router-view>
+          </NMessageProvider>
         </n-layout>
       </n-layout>
     </n-space>
@@ -106,8 +141,7 @@ const menuOptions = [
 
 </template> -->
 
-<style scoped>
-</style>
+<style scoped></style>
 <style>
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;

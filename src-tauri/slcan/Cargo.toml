@@ -1,0 +1,10 @@
+[package]
+name = "slcan"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-can = "0.4.1"
+nb = "1.0"
+serde = { version = "1.0.216", features = ["derive"] }
+serialport = "4.6.1"

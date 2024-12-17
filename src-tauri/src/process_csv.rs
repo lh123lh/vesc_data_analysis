@@ -6,14 +6,31 @@ use std::fs::File;
 use std::sync::Mutex;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
+pub struct CsvFile {
+    file: String,
+    x_name: String,
+    y_name: String,
+    x_filter: f32,
+    y_filter: f32,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
+pub struct PolyParam {
+    a: f32,
+    b: f32,
+    c: f32,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct CsvProcessor {
     path: Option<String>,
     x_axis: Option<Vec<f32>>,
     y_axis: Option<Vec<f32>>,
 }
 
-trait DataProcessor {
-    fn merge_axis(&self) -> Vec<(f32, f32)>;
+pub trait DataProcessor {
+    fn merge_axis(&self, x_filter: f32, y_filter: f32) -> Vec<(f32, f32)>;
+    fn calc_residual(&mut self, csv: &CsvFile, poly: &PolyParam) -> Result<Vec<(i32, f32)>>;
 }
 
 pub static CSV_PROCESSOR: Lazy<Mutex<CsvProcessor>> = Lazy::new(|| Mutex::new(CsvProcessor::new()));
@@ -61,8 +78,8 @@ impl CsvProcessor {
         Ok(result)
     }
 
-    pub fn get_x_axis_data(&mut self) -> Result<()> {
-        match self.get_col_data("erpm") {
+    pub fn get_x_axis_data(&mut self, x_name: &str) -> Result<()> {
+        match self.get_col_data(x_name) {
             std::result::Result::Ok(data) => {
                 self.x_axis = Some(data);
                 Ok(())
@@ -73,8 +90,8 @@ impl CsvProcessor {
         }
     }
 
-    pub fn get_y_axis_data(&mut self) -> Result<()> {
-        match self.get_col_data("current_in") {
+    pub fn get_y_axis_data(&mut self, y_name: &str) -> Result<()> {
+        match self.get_col_data(y_name) {
             std::result::Result::Ok(data) => {
                 self.y_axis = Some(data);
                 Ok(())
@@ -85,13 +102,18 @@ impl CsvProcessor {
         }
     }
 
-    pub fn get_axis_data(&mut self) -> Result<Vec<(f32, f32)>> {
-        Ok(self.merge_axis())
+    pub fn get_axis_data(&mut self, csv: &CsvFile) -> Result<Vec<(f32, f32)>> {
+        self.set_path(&csv.file).unwrap();
+
+        self.get_x_axis_data(&csv.x_name)?;
+        self.get_y_axis_data(&csv.y_name)?;
+
+        Ok(self.merge_axis(csv.x_filter, csv.y_filter))
     }
 }
 
 impl DataProcessor for CsvProcessor {
-    fn merge_axis(&self) -> Vec<(f32, f32)> {
+    fn merge_axis(&self, x_filter: f32, y_filter: f32) -> Vec<(f32, f32)> {
         let mut coordinates = Vec::new();
 
         for (x, y) in self
@@ -101,9 +123,24 @@ impl DataProcessor for CsvProcessor {
             .iter()
             .zip(self.y_axis.as_ref().unwrap().iter())
         {
-            coordinates.push((x.clone(), y.clone()));
+            if *x >= x_filter && *y >= y_filter {
+                coordinates.push((x.clone(), y.clone()));
+            }
         }
 
         coordinates
+    }
+
+    fn calc_residual(&mut self, csv: &CsvFile, poly: &PolyParam) -> Result<Vec<(i32, f32)>> {
+        let mut residual = Vec::new();
+        let mut idx = 0;
+
+        for (x, y) in self.get_axis_data(csv).unwrap() {
+            let expect = poly.a * x * x + poly.b * x + poly.c;
+            residual.push((idx, expect - y));
+            idx += 1;
+        }
+
+        Ok(residual)
     }
 }
