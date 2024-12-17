@@ -11,6 +11,7 @@ import {
   BarChartOutline,
   CheckmarkDoneOutline
 } from "@vicons/ionicons5";
+import TitleBar from "./components/TitleBar.vue";
 
 
 const collapsed = ref(false);
@@ -80,11 +81,13 @@ const menuOptions = [
   <n-config-provider :theme="theme">
     <n-space vertical>
       <!-- 页面顶部标题栏 -->
-      <n-layout-header bordered class="title-bar" style="margin-top: -10px;">
-        <n-flex justify="space-between">
-          <h1 class="title">Vesc 数据分析</h1>
+      <n-layout-header bordered class="title-bar" style="margin-top: 0px;">
+        <n-flex justify="space-between" data-tauri-drag-region>
+          <h1 class="title" data-tauri-drag-region @copy.prevent="">Vesc 数据分析</h1>
           <div>
-            <n-switch @update:value="changeTheme" style="margin-right: 10px">
+            <n-flex vertical>
+            <TitleBar style="margin-top: -10px;" />
+            <n-switch @update:value="changeTheme" style="margin-right: 10px; margin-left: auto; margin-top: 25px;">
               <template #icon>
                 <n-icon size="15">
                   <Sunny v-if="!isDarkMode" />
@@ -92,6 +95,7 @@ const menuOptions = [
                 </n-icon>
               </template>
             </n-switch>
+          </n-flex>
           </div>
         </n-flex>
       </n-layout-header>
@@ -103,7 +107,7 @@ const menuOptions = [
             default-value="home" />
         </n-layout-sider>
 
-        <n-layout style="margin-left: 15px; margin-right: 15px; min-height: 92.7vh;">
+        <n-layout style="margin-left: 15px; margin-right: 15px; min-height: 89.3vh;">
           <NMessageProvider>
             <!-- <RouterView /> -->
             <router-view v-slot="{ Component }">
@@ -121,7 +125,7 @@ const menuOptions = [
 
 <style scoped>
 .title-bar {
-  height: 60px;
+  height: 80px;
   line-height: 60px;
   text-align: center;
   width: 100%;
@@ -130,7 +134,7 @@ const menuOptions = [
 .title-bar .title {
   text-align: start;
   margin-left: 10px;
-  margin-top: 0px;
+  margin-top: 10px;
 }
 </style>
 
