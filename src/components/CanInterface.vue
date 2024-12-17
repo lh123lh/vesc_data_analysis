@@ -165,9 +165,6 @@ async function stop_recording() {
         </NSpace>
       </NGridItem>
       <NGridItem :span="13">
-        <!-- <NCard title="CAN Messages" :bordered="true">
-          <CanMessageList :messages="messages" />
-        </NCard> -->
         <CanGetvescData :is-connected="isConnected" @startCollect="handleStart" @stopCollect="handleStop" />
       </NGridItem>
     </NGrid>
@@ -180,6 +177,6 @@ async function stop_recording() {
 } */
 
 .container {
-  min-height: 89vh;
+  min-height: 87vh;
 }
 </style>

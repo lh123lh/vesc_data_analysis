@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "vesc_data_analysis",
-        "width": 1000,
-        "height": 800,
+        "width": 1012,
+        "height": 700,
         "fullscreen": false,
         "resizable": true,
         "decorations": false

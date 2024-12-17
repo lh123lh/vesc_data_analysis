@@ -188,7 +188,7 @@ async function calc_csv_residual(e) {
 
     </n-form>
 
-    <ScatterChart title="误差" :value=data height="72vh" />
+    <ScatterChart title="误差" :value=data height="69vh" />
   </n-card>
 </template>
 

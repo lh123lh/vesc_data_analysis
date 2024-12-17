@@ -189,7 +189,7 @@ async function process_csv_data(e) {
 
 
     <ScatterChart title="Current - ERPM" :value=data :xMin="parseInt(formVal.cfg.xAxis)"
-      :yMin="parseInt(formVal.cfg.yAxis)" height="74vh" />
+      :yMin="parseInt(formVal.cfg.yAxis)" height="73vh" />
   </n-card>
 </template>
 
