@@ -21,7 +21,8 @@ const recordDurationFormated = ref("");
 const recordSize = ref("");
 
 onMounted(() => { //组件挂载时的生命周期执行的方法
-  handleDisconnect();
+  cmds.cmd_deinit_can_port()
+
   get_avaliable_ports();
 
   listen('record-size', handleRecordSize);

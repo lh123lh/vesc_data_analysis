@@ -81,21 +81,27 @@ const menuOptions = [
   <n-config-provider :theme="theme">
     <n-space vertical>
       <!-- 页面顶部标题栏 -->
-      <n-layout-header bordered class="title-bar" style="margin-top: 0px;">
+      <n-layout-header bordered class="title-bar" style="margin-top: 0px;" @copy.prevent=""  data-tauri-drag-region>
         <n-flex justify="space-between" data-tauri-drag-region>
-          <h1 class="title" data-tauri-drag-region @copy.prevent="">Vesc 数据分析</h1>
+          <n-flex  class="title" justify="space-between">
+            <n-icon data-tauri-drag-region style="margin-right: 10px;">
+              <img class="custom-icon" src="./assets/icon.png"  data-tauri-drag-region />
+            </n-icon>
+            <h1 data-tauri-drag-region>Vesc 数据分析</h1>
+          </n-flex>
+
           <div>
             <n-flex vertical>
-            <TitleBar style="margin-top: -10px;" />
-            <n-switch @update:value="changeTheme" style="margin-right: 10px; margin-left: auto; margin-top: 25px;">
-              <template #icon>
-                <n-icon size="15">
-                  <Sunny v-if="!isDarkMode" />
-                  <Moon v-else />
-                </n-icon>
-              </template>
-            </n-switch>
-          </n-flex>
+              <TitleBar style="margin-top: -10px;" />
+              <n-switch @update:value="changeTheme" style="margin-right: 10px; margin-left: auto; margin-top: 25px;">
+                <template #icon>
+                  <n-icon size="15">
+                    <Sunny v-if="!isDarkMode" />
+                    <Moon v-else />
+                  </n-icon>
+                </template>
+              </n-switch>
+            </n-flex>
           </div>
         </n-flex>
       </n-layout-header>
@@ -134,7 +140,14 @@ const menuOptions = [
 .title-bar .title {
   text-align: start;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: -5px;
+}
+
+.title-bar .custom-icon {
+  width: 32px;
+  height: 32px;
+  margin-left: 0px;
+  margin-top: 32px;
 }
 </style>
 
