@@ -90,7 +90,7 @@ jobs:
   update_tag:
     name: Update tag
     runs-on: ubuntu-latest
-    needs: [alpha, alpha-for-linux-arm, alpha-for-fixed-webview2]
+    needs: [alpha]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -113,8 +113,6 @@ jobs:
 
           ### Linux
           - Linux 64位: amd64.deb/amd64.rpm
-          - Linux arm64 architecture: arm64.deb/aarch64.rpm
-          - Linux armv7架构: armhf.deb/armhfp.rpm
 
           ### Windows (Win7 用户请查看下面FAQ中的解决方案)
           #### 正常版本(推荐)
