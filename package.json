@@ -7,18 +7,24 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "updater": "node scripts/updater.mjs",
+    "portable": "node scripts/portable.mjs"
   },
   "dependencies": {
+    "@actions/github": "^6.0.0",
     "@tauri-apps/api": "^2.1.1",
     "@tauri-apps/plugin-dialog": "~2.2.0",
     "@tauri-apps/plugin-shell": "^2.2.0",
     "@tauri-apps/plugin-store": "~2.2.0",
+    "@tauri-apps/plugin-updater": "~2",
+    "@types/fs-extra": "^11.0.4",
     "@vicons/ionicons5": "^0.12.0",
     "date-fns": "^4.1.0",
     "echarts": "^5.5.1",
     "echarts-stat": "^1.2.0",
     "naive-ui": "^2.40.3",
+    "node-fetch": "^3.3.2",
     "pinia": "^2.3.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -26,6 +32,8 @@
   "devDependencies": {
     "@tauri-apps/cli": "^2.1.0",
     "@vitejs/plugin-vue": "^5.2.1",
+    "adm-zip": "^0.5.16",
     "vite": "^6.0.3"
-  }
+  },
+  "packageManager": "pnpm@9.15.0"
 }

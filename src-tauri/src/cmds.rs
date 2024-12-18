@@ -106,17 +106,16 @@ pub async fn start_recording(id: u32, msec: u64) -> CmdResult {
 pub async fn stop_recording() -> CmdResult {
     let motor = MOTOR.lock().await;
     if let Err(e) = motor.tx.send(false) {
-      // 处理可能的错误
-      eprintln!("Failed to send stop signal: {:?}", e);
-  }
+        // 处理可能的错误
+        eprintln!("Failed to send stop signal: {:?}", e);
+    }
 
     Ok(())
 }
 
 #[tauri::command]
 pub async fn get_record_size(app: AppHandle, csv: String) -> CmdResult {
-    app.emit("record-size", motor::get_file_size(&csv))
-        .unwrap();
+    app.emit("record-size", motor::get_file_size(&csv)).unwrap();
 
     Ok(())
 }

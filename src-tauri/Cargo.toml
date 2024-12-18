@@ -34,3 +34,6 @@ slcan = { path = "./slcan" }
 bytes = "1.9.0"
 crc = "3.2.1"
 chrono = "0.4.39"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"
