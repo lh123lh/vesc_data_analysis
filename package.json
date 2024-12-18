@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "updater": "node scripts/updater.mjs",
+    "updater-fixed-webview2": "node scripts/updater-fixed-webview2.mjs",
+    "portable": "node scripts/portable.mjs",
+    "portable-fixed-webview2": "node scripts/portable-fixed-webview2.mjs",
   },
   "dependencies": {
     "@tauri-apps/api": "^2.1.1",
