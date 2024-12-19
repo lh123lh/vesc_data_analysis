@@ -1,7 +1,7 @@
 {
   "name": "vesc_data_analysis",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,6 +15,7 @@
     "@actions/github": "^6.0.0",
     "@tauri-apps/api": "^2.1.1",
     "@tauri-apps/plugin-dialog": "~2.2.0",
+    "@tauri-apps/plugin-process": "~2",
     "@tauri-apps/plugin-shell": "^2.2.0",
     "@tauri-apps/plugin-store": "~2.2.0",
     "@tauri-apps/plugin-updater": "~2",
@@ -23,6 +24,7 @@
     "date-fns": "^4.1.0",
     "echarts": "^5.5.1",
     "echarts-stat": "^1.2.0",
+    "marked": "^15.0.4",
     "naive-ui": "^2.40.3",
     "node-fetch": "^3.3.2",
     "pinia": "^2.3.0",

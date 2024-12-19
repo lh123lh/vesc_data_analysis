@@ -1,5 +1,5 @@
 <script setup>
-import { ref, h } from "vue";
+import { ref, h, onMounted } from "vue";
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { NIcon, darkTheme, lightTheme } from "naive-ui";
 import {
@@ -12,11 +12,20 @@ import {
   CheckmarkDoneOutline
 } from "@vicons/ionicons5";
 import TitleBar from "./components/TitleBar.vue";
+import AppUpdateDialog from "./components/AppUpdateDialog.vue";
 
+import { check } from '@tauri-apps/plugin-updater';
 
 const collapsed = ref(false);
 const theme = ref(lightTheme);
 const isDarkMode = ref(false);
+const hasUpdate = ref(false);
+const updateDialogShow = ref(false);
+const versionInfo = ref("");
+
+onMounted(() => {
+  checkAppUpdate()
+})
 
 function changeTheme() {
   if (isDarkMode.value) {
@@ -31,6 +40,16 @@ function changeTheme() {
 
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) });
+}
+
+async function checkAppUpdate() {
+  const update = await check();
+
+  if (update.available) {
+    // console.log(update)
+    hasUpdate.value = true;
+    versionInfo.value = `## v${update.version}\r\n` + update.body;
+  }
 }
 
 const menuOptions = [
@@ -81,13 +100,17 @@ const menuOptions = [
   <n-config-provider :theme="theme">
     <n-space vertical>
       <!-- 页面顶部标题栏 -->
-      <n-layout-header bordered class="title-bar" style="margin-top: 0px;" @copy.prevent=""  data-tauri-drag-region>
+      <n-layout-header bordered class="title-bar" style="margin-top: 0px;" @copy.prevent="" data-tauri-drag-region>
         <n-flex justify="space-between" data-tauri-drag-region>
-          <n-flex  class="title" justify="space-between">
+          <n-flex class="title" justify="space-between">
             <n-icon data-tauri-drag-region style="margin-right: 10px;">
-              <img class="custom-icon" src="./assets/icon.png"  data-tauri-drag-region />
+              <img class="custom-icon" src="./assets/icon.png" data-tauri-drag-region />
             </n-icon>
-            <h1 data-tauri-drag-region>Vesc 数据分析</h1>
+            <n-badge v-if="hasUpdate" :offset="[-5, 25]" value="New" @click="updateDialogShow = true"
+              style="cursor: pointer;">
+              <h1>Vesc 数据分析</h1>
+            </n-badge>
+            <h1 v-else data-tauri-drag-region>Vesc 数据分析</h1>
           </n-flex>
 
           <div>
@@ -126,6 +149,9 @@ const menuOptions = [
       </n-layout>
     </n-space>
     <n-global-style />
+    <n-modal-provider>
+      <AppUpdateDialog v-model="updateDialogShow" :content="versionInfo" />
+    </n-modal-provider>
   </n-config-provider>
 </template>
 
