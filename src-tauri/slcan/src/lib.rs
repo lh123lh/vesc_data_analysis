@@ -1,8 +1,6 @@
 pub use embedded_can::{ExtendedId, Id, StandardId};
 use serde::{Deserialize, Serialize};
 use serialport::{self, SerialPort};
-#[cfg(target_family = "unix")]
-use std::os::unix::prelude::AsRawFd;
 use std::{
     convert::{TryFrom, TryInto},
     io,
@@ -86,16 +84,6 @@ pub struct CanSocket {
     rbuff: [u8; SLCAN_MTU],
     rcount: usize,
     error: bool,
-}
-
-#[cfg(target_family = "unix")]
-impl<P> AsRawFd for CanSocket<P>
-where
-    P: SerialPort + AsRawFd,
-{
-    fn as_raw_fd(&self) -> std::os::unix::prelude::RawFd {
-        self.port.as_raw_fd()
-    }
 }
 
 fn hextou8(s: u8) -> Result<u8, ()> {
